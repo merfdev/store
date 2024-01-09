@@ -10,14 +10,14 @@ function ProductProvider({ children }) {
       try {
         setProducts(await api.get("/products"));
       } catch (error) {
-        console.log(error);
+        console.log(error.massage);
       }
     };
     fetchProducts();
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products }}>
+    <ProductContext.Provider value={products}>
       {children}
     </ProductContext.Provider>
   );
