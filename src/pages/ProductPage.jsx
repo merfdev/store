@@ -1,37 +1,61 @@
-import { useState } from "react";
-import { MdYoutubeSearchedFor } from "react-icons/md";
+import { useEffect, useState } from "react";
+
+import { FaList } from "react-icons/fa6";
 
 import Card from "../components/Card";
 import Loader from "../components/Loader";
 import { useProducts } from "../context/ProductContext";
 import styles from "./ProductPage.module.css";
+import Categories from "../components/Categories";
+import {
+  
+  filterdProducts,
+  getInitialQuery,
+  searchProducts,
+} from "../helpers/helper";
+import { useSearchParams } from "react-router-dom";
+import SearchBox from "../components/SearchBox";
 function ProductPage() {
   const products = useProducts();
   const [search, setSearch] = useState("");
-  const searchHandler = () => {
-    console.log("searchHandler");
-  };
+  const [query, setQuery] = useState({});
+  const [displayed, setDisplayed] = useState([]);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setDisplayed(products);
+    setQuery(getInitialQuery(searchParams));
+  }, [products]);
+  useEffect(() => {
+    setSearchParams(query);
+    setSearch(query.search || "");
+    let finalFilter = searchProducts(products, query.search);
+    finalFilter = filterdProducts(finalFilter, query.item);
+
+    setDisplayed(finalFilter);
+  }, [query]);
+  console.log(query);
+
   return (
     <>
-      <div>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value.toLowerCase().trim())}
-        />
-        <button onClick={searchHandler}>
-          <MdYoutubeSearchedFor />
-        </button>
-      </div>
+      <SearchBox setSearch={setSearch} search={search} setQuery={setQuery} />
       <div className={styles.container}>
         <div className={styles.products}>
-          {!products.length && <Loader />}
-          {products.map((product) => (
-            <Card key={product.id} data={product} />
+          {!displayed.length && <Loader />}
+          {displayed.map((displayed) => (
+            <Card key={displayed.id} data={displayed} />
           ))}
         </div>
-        <div>sidebar</div>
+        <div>
+          <div>
+            <FaList />
+            <p>Categories</p>
+          </div>
+          <ul>
+            <Categories query={query} setQuery={setQuery} />
+          </ul>
+        </div>
       </div>
     </>
   );

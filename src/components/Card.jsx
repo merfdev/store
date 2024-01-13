@@ -18,7 +18,7 @@ function Card({ data }) {
         <div>
           <button>
             <TbShoppingBagCheck />
-          </button>n    
+          </button>
         </div>
       </div>
     </div>
