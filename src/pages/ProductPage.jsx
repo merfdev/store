@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { FaList } from "react-icons/fa6";
+
 
 import Card from "../components/Card";
 import Loader from "../components/Loader";
@@ -48,10 +48,6 @@ function ProductPage() {
           ))}
         </div>
         <div>
-          <div>
-            <FaList />
-            <p>Categories</p>
-          </div>
           <ul>
             <Categories query={query} setQuery={setQuery} />
           </ul>

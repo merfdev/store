@@ -3,9 +3,17 @@ import { TbListDetails } from "react-icons/tb";
 import { TbShoppingBagCheck } from "react-icons/tb";
 import { shortenText } from "../helpers/helper";
 import styles from "./Card.module.css";
+import { useCart } from "../context/CartContext";
 
 function Card({ data }) {
   const { title, price, image, id } = data;
+  const [state, dispatch] = useCart();
+  console.log(state);
+
+  const AddProductHandler = () => {
+    dispatch({ type: "ADD_ITEM", payload: data });
+  };
+
   return (
     <div className={styles.card}>
       <img src={image} alt={title} />
@@ -17,7 +25,7 @@ function Card({ data }) {
         </Link>
         <div>
           <button>
-            <TbShoppingBagCheck />
+            <TbShoppingBagCheck onClick={AddProductHandler} />
           </button>
         </div>
       </div>
