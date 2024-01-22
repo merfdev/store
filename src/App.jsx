@@ -5,7 +5,7 @@ import DetailsPage from "./pages/DetailsPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ProductProvider from "./context/ProductContext";
 import CartProvider from "./context/CartContext";
-import Layout from "./components/layout/Layout";
+import Layout from "./layout/Layout";
 function App() {
   return (
     <CartProvider>
