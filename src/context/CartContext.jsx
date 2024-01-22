@@ -22,7 +22,31 @@ const reducer = (state, action) => {
         ...sumProduct(state.selectedItem),
         checkout: false,
       };
+    case "REMOVE_ITEM":
+      state.selectedItem = state.selectedItem.filter(
+        (item) => item.id !== action.payload.id
+      );
 
+      return { ...state, ...sumProduct(state.selectedItem) };
+    case "INCREASE_ITEM":
+      const index = state.selectedItem.findIndex(
+        (item) => item.id == action.payload.id
+      );
+      state.selectedItem[index].quantity++;
+      return { ...state, ...sumProduct(state.selectedItem) };
+    case "DECREASE_ITEM":
+      const decindex = state.selectedItem.findIndex(
+        (item) => item.id == action.payload.id
+      );
+      state.selectedItem[decindex].quantity--;
+      return { ...state, ...sumProduct(state.selectedItem) };
+    case "CHECKOUT":
+        return {
+            selectedItem: [],
+            itemCounter: 0,
+            total: 0,
+            checkout: true,
+        }
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }

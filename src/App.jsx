@@ -5,17 +5,20 @@ import DetailsPage from "./pages/DetailsPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ProductProvider from "./context/ProductContext";
 import CartProvider from "./context/CartContext";
+import Layout from "./components/layout/Layout";
 function App() {
   return (
     <CartProvider>
       <ProductProvider>
-        <Routes>
-          <Route index element={<Navigate to="/products" replace />} />
-          <Route path="/products" element={<ProductPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-          <Route path="/details" element={<DetailsPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-        </Routes>
+        <Layout>
+          <Routes>
+            <Route index element={<Navigate to="/products" replace />} />
+            <Route path="/products" element={<ProductPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+            <Route path="/products/:id" element={<DetailsPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+          </Routes>
+        </Layout>
       </ProductProvider>
     </CartProvider>
   );

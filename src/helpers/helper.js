@@ -44,7 +44,14 @@ const sumProduct = (product) => {
     .toFixed(2);
   return { itemCounter, total };
 };
-
+const productQuantity = (state, id) => {
+  const index = state.selectedItem.findIndex((item) => item.id == id);
+  if (index == -1) {
+    return 0;
+  } else {
+    return state.selectedItem[index].quantity;
+  }
+};
 export {
   shortenText,
   searchProducts,
@@ -52,4 +59,5 @@ export {
   creatQueryObject,
   getInitialQuery,
   sumProduct,
+  productQuantity,
 };
