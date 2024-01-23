@@ -9,7 +9,6 @@ import { MdDeleteSweep } from "react-icons/md";
 function Card({ data }) {
   const { title, price, image, id } = data;
   const [state, dispatch] = useCart();
-  console.log(state);
 
   const AddProductHandler = (type) => {
     dispatch({ type, payload: data });

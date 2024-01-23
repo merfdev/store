@@ -13,8 +13,13 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "ADD_ITEM":
-      if (!state.selectedItem.find((item) => item.id == action.payload.id)) {
-        state.selectedItem.push({ ...action.payload, quantity: 1 });
+      const pro = state.selectedItem.find(
+        (item) => item.id == action.payload.id
+      );
+      if (!pro) {
+        const produ = { ...action.payload, quantity: 1 };
+        state.selectedItem.push(produ);
+        localStorage.setItem(produ.id, JSON.stringify(produ));
       }
 
       return {
@@ -33,6 +38,7 @@ const reducer = (state, action) => {
         (item) => item.id == action.payload.id
       );
       state.selectedItem[index].quantity++;
+
       return { ...state, ...sumProduct(state.selectedItem) };
     case "DECREASE_ITEM":
       const decindex = state.selectedItem.findIndex(
@@ -41,12 +47,13 @@ const reducer = (state, action) => {
       state.selectedItem[decindex].quantity--;
       return { ...state, ...sumProduct(state.selectedItem) };
     case "CHECKOUT":
-        return {
-            selectedItem: [],
-            itemCounter: 0,
-            total: 0,
-            checkout: true,
-        }
+      localStorage.clear();
+      return {
+        selectedItem: [],
+        itemCounter: 0,
+        total: 0,
+        checkout: true,
+      };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
